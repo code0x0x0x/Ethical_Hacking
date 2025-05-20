@@ -1,5 +1,6 @@
 import random
 import string
+import argparse
 
 def is_password_compromised(password):
     """
@@ -62,10 +63,32 @@ def generate_password(length=12, use_uppercase=True, use_lowercase=True, use_num
 
     return password
 
-if __name__ == "__main__":
-    # Example usage
-    password = generate_password()
+def main():
+    parser = argparse.ArgumentParser(description="Generate a secure password with customizable options.")
+    parser.add_argument("--length", type=int, default=12, help="Length of the password (default: 12)")
+    parser.add_argument("--strength", type=str, choices=["weak", "medium", "strong"], default="strong",
+                      help="Desired password strength (default: strong)")
+    
+    args = parser.parse_args()
+    
+    # Adjust character sets based on strength
+    use_uppercase = args.strength in ["medium", "strong"]
+    use_lowercase = args.strength in ["medium", "strong"]
+    use_numbers = args.strength in ["medium", "strong"]
+    use_special = args.strength == "strong"
+    
+    password = generate_password(
+        length=args.length,
+        use_uppercase=use_uppercase,
+        use_lowercase=use_lowercase,
+        use_numbers=use_numbers,
+        use_special=use_special
+    )
+    
     print("Generated Password:", password)
     print("Strength:", evaluate_password_strength(password))
     print("Note: For secure storage, use strong encryption like argon2 or PBKDF2.")
-    print("Note: Enable Multi-Factor Authentication (MFA) for added security.") 
+    print("Note: Enable Multi-Factor Authentication (MFA) for added security.")
+
+if __name__ == "__main__":
+    main() 
